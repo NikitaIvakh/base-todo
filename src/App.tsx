@@ -31,7 +31,7 @@ function App() {
 		setTodos([...todos, newTodo])
 	}
 
-	const toggleTodoCompletion = (id: string) => {
+	const toggleTodo = (id: Todo['id']) => {
 		setTodos(
 			todos.map(todo =>
 				todo.id === id ? { ...todo, completed: !todo.completed } : todo
@@ -39,7 +39,7 @@ function App() {
 		)
 	}
 
-	const deleteTodo = (id: string) => {
+	const removeTodo = (id: Todo['id']) => {
 		setTodos(todos.filter(item => item.id !== id))
 	}
 
@@ -47,7 +47,6 @@ function App() {
 		<div className='App'>
 			<NewTodoForm handleClick={addTodo} />
 			{todos
-				.filter(item => item.completed !== true)
 				.map((item, i) => {
 					return (
 						<TodoItem
@@ -55,8 +54,8 @@ function App() {
 							id={item.id}
 							completed={item.completed}
 							title={item.title}
-							changeState={toggleTodoCompletion}
-							deleteTodo={deleteTodo}
+							toggleTodo={toggleTodo}
+							removeTodo={removeTodo}
 						/>
 					)
 				})

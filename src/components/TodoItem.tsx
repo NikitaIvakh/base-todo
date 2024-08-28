@@ -1,22 +1,22 @@
 import { Todo } from '../types'
 
 interface ITodoItem extends Todo {
-	changeState: any
-	deleteTodo: any
+	toggleTodo: (id: Todo['id']) => void
+	removeTodo: (id: Todo['id']) => void
 }
 
 const TodoItem = (props: ITodoItem) => {
-	const { id, title, completed, changeState, deleteTodo } = props
+	const { id, title, completed, toggleTodo, removeTodo } = props
 
 	return (
 		<li style={{ color: 'red', backgroundColor: 'white' }}>
 			<input
 				type='checkbox'
 				defaultChecked={completed}
-				onChange={() => changeState(id)}
+				onChange={() => toggleTodo(id)}
 			/>
 			<span>{title}</span>
-			<span style={{ cursor: 'pointer' }} onClick={() => deleteTodo(id)}>
+			<span style={{ cursor: 'pointer' }} onClick={() => removeTodo(id)}>
 				&times;
 			</span>
 		</li>
