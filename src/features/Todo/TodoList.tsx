@@ -1,10 +1,12 @@
 import TodoItem from 'components/TodoItem'
-import { useAppDispatch, useAppSelector } from 'hooks/redux-hook'
+import { useAppDispatch } from 'hooks/redux-hook'
+import { useSelector } from 'react-redux'
 import { Todo } from 'types'
+import { selectAllTodos } from './todoSelector'
 import { removeTodo, toggleTodo } from './todoSlice'
 
 const TodoList = () => {
-	const list = useAppSelector(state => state.todos)
+	const list = useSelector(selectAllTodos)
 	const dispatch = useAppDispatch()
 
 	const handleRemoveTodo = (id: Todo['id']) => {
