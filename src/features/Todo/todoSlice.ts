@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Todo } from 'types'
+import { v4 as uuidv4 } from 'uuid'
 
 const initialState: Todo[] = []
 
@@ -9,7 +10,8 @@ const todoSlice = createSlice({
 	reducers: {
 		addTodo: (state, action: PayloadAction<string>) => {
 			const newTodo = {
-				id: new Date().toString(),
+				id: uuidv4(),
+				userId: uuidv4(),
 				title: action.payload,
 				completed: false,
 			}

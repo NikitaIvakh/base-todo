@@ -1,12 +1,14 @@
-import NewTodo from 'features/Todo/NewTodo'
-import TodoList from 'features/Todo/TodoList'
+import NewTodoAsync from 'features/AsyncTodo/NewTodoAsync'
+import TodoListAsync from 'features/AsyncTodo/TodoListAsync'
 import './App.css'
 
 function App() {
 	return (
 		<div className='App'>
-			<NewTodo />
-			<TodoList />
+			{/* <NewTodo />
+			<TodoList /> */}
+			<NewTodoAsync />
+			<TodoListAsync />
 		</div>
 	)
 }
