@@ -17,10 +17,7 @@ export const fetchAllTodos = createAsyncThunk<
 	{
 		condition: (_, { getState }) => {
 			const { status } = getState().todosAsync
-
-			if (status === 'loading') {
-				return false
-			}
+			if (status === 'loading') return false
 		},
 	}
 )
@@ -49,10 +46,57 @@ export const createTodo = createAsyncThunk<
 	{
 		condition: (_, { getState }) => {
 			const { status } = getState().todosAsync
+			if (status === 'loading') return false
+		},
+	}
+)
 
-			if (status === 'loading') {
-				return false
-			}
+export const toggleTodo = createAsyncThunk<
+	Todo,
+	Todo['id'],
+	{ state: { todosAsync: TodoSlice } }
+>(
+	'todo/toggleTodo',
+	async (id, { getState, rejectWithValue }) => {
+		const { request } = useHttp()
+		const todo = getState().todosAsync.list.find(item => item.id === id)
+
+		if (todo) {
+			return await request(
+				`https://jsonplaceholder.typicode.com/todos/${id}`,
+				'PATCH',
+				JSON.stringify({
+					completed: !todo.completed,
+				})
+			)
+		}
+
+		return rejectWithValue(`No such todo with id: ${id}`)
+	},
+	{
+		condition: (_, { getState }) => {
+			const { status } = getState().todosAsync
+			if (status === 'loading') return false
+		},
+	}
+)
+
+export const removeTodo = createAsyncThunk<
+	Todo['id'],
+	Todo['id'],
+	{ state: { todosAsync: TodoSlice } }
+>(
+	'todo/removeTodo',
+	async id => {
+		const { request } = useHttp()
+		await request(`https://jsonplaceholder.typicode.com/posts/${id}`, 'DELETE')
+
+		return id
+	},
+	{
+		condition: (_, { getState }) => {
+			const { status } = getState().todosAsync
+			if (status === 'loading') return false
 		},
 	}
 )
